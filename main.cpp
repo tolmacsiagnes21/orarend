@@ -32,16 +32,16 @@ int main()
     //     std::cout << "Max Availability: " << tanar.getMaxOrak() << std::endl;
     // }
 
-    for (const auto &diak : diakok) {
-        std::cout << "Surname: " << diak.getVezeteknev()<< ", Forename: " << diak.getKeresztnev() << std::endl;
-        std::cout << "Available Timeslots: ";
-        for (const auto &slot : diak.getIdopontok()) {
-            std::cout << slot << " ";
-        }
-        std::cout << std::endl;
-        std::cout << "Class: " << diak.getOsztaly() << std::endl;
-        std::cout << "Max Availability: " << diak.getOraszam() << std::endl;
-    }
+    // for (const auto &diak : diakok) {
+    //     std::cout << "Surname: " << diak.getVezeteknev()<< ", Forename: " << diak.getKeresztnev() << std::endl;
+    //     std::cout << "Available Timeslots: ";
+    //     for (const auto &slot : diak.getIdopontok()) {
+    //         std::cout << slot << " ";
+    //     }
+    //     std::cout << std::endl;
+    //     std::cout << "Class: " << diak.getOsztaly() << std::endl;
+    //     std::cout << "Max Availability: " << diak.getOraszam() << std::endl;
+    // }
     
     return 0;
 }
