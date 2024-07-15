@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <set>
 #include "xlnt/xlnt.hpp"
 
 #include "tanar.h"
@@ -10,12 +11,18 @@ using namespace std;
 
 vector<Tanar> readExcelColumnsABCDE_tanar(const std::string &filePath);
 vector<Diak> readExcelColumnsABCDE_diak(const std::string &filePath);
+std::vector<std::vector<std::vector<std::string>>> constructWeightMatrix(const std::vector<Tanar>& tanarok, const std::vector<Diak>& diakok);
+std::vector<std::string> findCommonSlots(const std::vector<std::string>& slots1, const std::vector<std::string>& slots2);
 
 int main()
 {
     string filePath = "C:/Users/Agnes/Desktop/orarend/Adatok.xlsx";
     vector<Tanar> tanarok = readExcelColumnsABCDE_tanar(filePath);
     vector<Diak> diakok = readExcelColumnsABCDE_diak(filePath);
+
+    // Construct the weight matrix
+     std::vector<std::vector<std::vector<std::string>>> weightMatrix = constructWeightMatrix(tanarok, diakok);
+
 
     // for (const auto &tanar : tanarok) {
     //     std::cout << "Surname: " << tanar.getVezeteknev()<< ", Forename: " << tanar.getKeresztnev() << std::endl;
@@ -104,4 +111,24 @@ std::vector<Diak> readExcelColumnsABCDE_diak(const std::string &filePath) {
     }
 
     return diakok;
+}
+
+// Function to find the intersection of two vectors
+std::vector<std::string> findCommonSlots(const std::vector<std::string>& slots1, const std::vector<std::string>& slots2) {
+    std::set<std::string> set1(slots1.begin(), slots1.end());
+    std::set<std::string> set2(slots2.begin(), slots2.end());
+    std::vector<std::string> commonSlots;
+    std::set_intersection(set1.begin(), set1.end(), set2.begin(), set2.end(), std::back_inserter(commonSlots));
+    return commonSlots;
+}
+
+// Function to construct the weight matrix for the bipartite graph
+std::vector<std::vector<std::vector<std::string>>> constructWeightMatrix(const std::vector<Tanar>& tanarok, const std::vector<Diak>& diakok) {
+    std::vector<std::vector<std::vector<std::string>>> weightMatrix(tanarok.size(), std::vector<std::vector<std::string>>(diakok.size()));
+    for (size_t i = 0; i < tanarok.size(); ++i) {
+        for (size_t j = 0; j < diakok.size(); ++j) {
+            weightMatrix[i][j] = findCommonSlots(tanarok[i].getIdopontok(), diakok[j].getIdopontok());
+        }
+    }
+    return weightMatrix;
 }
