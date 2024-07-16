@@ -6,6 +6,7 @@
 
 #include "tanar.h"
 #include "diak.h"
+#include "hungarian_algorithm.h"
 
 using namespace std;
 
@@ -13,6 +14,8 @@ vector<Tanar> readExcelColumnsABCDE_tanar(const std::string &filePath);
 vector<Diak> readExcelColumnsABCDE_diak(const std::string &filePath);
 std::vector<std::vector<std::vector<std::string>>> constructWeightMatrix(const std::vector<Tanar>& tanarok, const std::vector<Diak>& diakok);
 std::vector<std::string> findCommonSlots(const std::vector<std::string>& slots1, const std::vector<std::string>& slots2);
+void greedyAssignment(const std::vector<Tanar>& teachers, const std::vector<Diak>& students, const std::vector<std::vector<std::vector<std::string>>>& weightMatrix);
+
 
 int main()
 {
@@ -23,36 +26,37 @@ int main()
     // Construct the weight matrix
      std::vector<std::vector<std::vector<std::string>>> weightMatrix = constructWeightMatrix(tanarok, diakok);
 
-
-    // for (const auto &tanar : tanarok) {
-    //     std::cout << "Surname: " << tanar.getVezeteknev()<< ", Forename: " << tanar.getKeresztnev() << std::endl;
-    //     std::cout << "Available Timeslots: ";
-    //     for (const auto &slot : tanar.getIdopontok()) {
-    //         std::cout << slot << " ";
+    // std::vector<std::vector<int>> intWeightMatrix(tanarok.size(), std::vector<int>(diakok.size(), 0));
+    // for (size_t i = 0; i < tanarok.size(); ++i) {
+    //     for (size_t j = 0; j < diakok.size(); ++j) {
+    //         intWeightMatrix[i][j] = weightMatrix[i][j].size();
     //     }
-    //     std::cout << std::endl;
-    //     std::cout << "Classes: ";
-    //     for (const auto &slot : tanar.getTanitottOsztalyok()) {
-    //         std::cout << slot << " ";
-    //     }
-    //     std::cout << std::endl;
-    //     std::cout << "Max Availability: " << tanar.getMaxOrak() << std::endl;
     // }
 
-    // for (const auto &diak : diakok) {
-    //     std::cout << "Surname: " << diak.getVezeteknev()<< ", Forename: " << diak.getKeresztnev() << std::endl;
-    //     std::cout << "Available Timeslots: ";
-    //     for (const auto &slot : diak.getIdopontok()) {
-    //         std::cout << slot << " ";
+
+    greedyAssignment(tanarok, diakok, weightMatrix);
+    // // Find the maximum weighted bipartite matching
+    // HungarianAlgorithm hungarian(intWeightMatrix);
+    // int maxWeight = hungarian.maxMatching();
+
+    // // Output the results
+    // std::cout << "Maximum Weight: " << maxWeight << std::endl;
+    // std::vector<int> matching = hungarian.getMatching();
+    // for (size_t i = 0; i < matching.size(); ++i) {
+    //     if (matching[i] != -1) {
+    //         std::cout << "Teacher " << tanarok[i].getVezeteknev() << " " << tanarok[i].getKeresztnev() 
+    //                   << " is matched with Student " << diakok[matching[i]].getVezeteknev() 
+    //                   << " " << diakok[matching[i]].getKeresztnev() << " at slots: ";
+    //         for (const auto& slot : weightMatrix[i][matching[i]]) {
+    //             std::cout << slot << " ";
+    //         }
+    //         std::cout << std::endl;
     //     }
-    //     std::cout << std::endl;
-    //     std::cout << "Class: " << diak.getOsztaly() << std::endl;
-    //     std::cout << "Max Availability: " << diak.getOraszam() << std::endl;
     // }
-    
+
     return 0;
 }
-
+   
 std::vector<std::string> splitString(const std::string &str, char delimiter) {
     std::vector<std::string> tokens;
     std::stringstream ss(str);
@@ -131,4 +135,22 @@ std::vector<std::vector<std::vector<std::string>>> constructWeightMatrix(const s
         }
     }
     return weightMatrix;
+}
+
+void greedyAssignment(const std::vector<Tanar>& teachers, const std::vector<Diak>& students, const std::vector<std::vector<std::vector<std::string>>>& weightMatrix) {
+    std::vector<bool> assignedStudents(students.size(), false);
+
+    for (size_t i = 0; i < teachers.size(); ++i) {
+        std::cout << "Teacher: " << teachers[i].getVezeteknev() << " " << teachers[i].getKeresztnev() << std::endl;
+        for (size_t j = 0; j < students.size(); ++j) {
+            if (!assignedStudents[j] && !weightMatrix[i][j].empty()) {
+                assignedStudents[j] = true;
+                std::cout << "  Student: " << students[j].getVezeteknev() << " " << students[j].getKeresztnev() << " -> Common Slots: ";
+                for (const auto& slot : weightMatrix[i][j]) {
+                    std::cout << slot << " ";
+                }
+                std::cout << std::endl;
+            }
+        }
+    }
 }

@@ -10,6 +10,7 @@
                 "main.cpp",
                 "tanar.cpp",
                 "diak.cpp",
+                "hungarian_algorithm.cpp",
                 "-lxlnt",
                 "-Lxlnt",
                 "-Ixlnt/include",
