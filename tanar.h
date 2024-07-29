@@ -10,12 +10,12 @@ class Tanar{
         std::string vezeteknev;
         std::string keresztnev;
         std::vector<std::string> idopontok;
-        std::vector<unsigned> tanitottOsztalyok;
-        unsigned maxOrak;   
+        std::vector<int> tanitottOsztalyok;
+        int maxOrak;   
 
     public:
         Tanar( const string &vezeteknev, const string &keresztnev, const std::vector<std::string> &idopontok,
-        const std::vector<unsigned> &tanitottOsztalyok, unsigned maxOrak);
+        const std::vector<int> &tanitottOsztalyok, int maxOrak);
         std::string getVezeteknev() const;
         void setVezeteknev(std::string);
 
@@ -25,11 +25,11 @@ class Tanar{
         std::vector<std::string> getIdopontok() const;
         void setIdopontok(std::vector<std::string>);
 
-        std::vector<unsigned> getTanitottOsztalyok() const;
-        void setTanitottOsztalyok(std::vector<unsigned>);
+        const std::vector<int>& getTanitottOsztalyok() const;
+        void setTanitottOsztalyok(std::vector<int>);
 
-        unsigned getMaxOrak() const;
-        void setMaxOrak(unsigned);
+        int getMaxOrak() const;
+        void setMaxOrak(int);
 };
 
 #endif

@@ -1,7 +1,7 @@
 #include "tanar.h"
 
 Tanar::Tanar(const string &veznev, const string &kernev, const std::vector<std::string> &idop,
-       const std::vector<unsigned> &osztalyok, unsigned maxO): vezeteknev(veznev), keresztnev(kernev), idopontok(idop), tanitottOsztalyok(osztalyok), maxOrak(maxO) 
+       const std::vector<int> &osztalyok, int maxO): vezeteknev(veznev), keresztnev(kernev), idopontok(idop), tanitottOsztalyok(osztalyok), maxOrak(maxO) 
         {}
         
 std::string Tanar::getVezeteknev() const{
@@ -26,17 +26,18 @@ void Tanar::setIdopontok(std::vector<std::string> input){
     idopontok = input;
 }
 
-std::vector<unsigned> Tanar::getTanitottOsztalyok() const{
+const std::vector<int>& Tanar::getTanitottOsztalyok() const{
     return tanitottOsztalyok;
 }
-void Tanar::setTanitottOsztalyok(std::vector<unsigned> input){
+
+void Tanar::setTanitottOsztalyok(std::vector<int> input){
     tanitottOsztalyok = input; 
 }
 
-unsigned Tanar::getMaxOrak() const{
+int Tanar::getMaxOrak() const{
     return maxOrak;
 }
-void Tanar::setMaxOrak(unsigned input){
+void Tanar::setMaxOrak(int input){
     if(input >= 0) maxOrak = input;
 }
 

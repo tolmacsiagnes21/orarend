@@ -10,12 +10,13 @@ class Diak{
         std::string vezeteknev;
         std::string keresztnev;
         std::vector<std::string> idopontok;
-        unsigned osztaly;
-        unsigned oraszam;   
+        int osztaly;
+        int oraszam;   
 
     public:
+
         Diak(const string &vezeteknev, const string &keresztnev, const std::vector<std::string> &idopontok,
-        unsigned osztaly, unsigned oraszam);
+        int osztaly, int oraszam);
         
         std::string getVezeteknev() const;
         void setVezeteknev(std::string);
@@ -26,11 +27,11 @@ class Diak{
         std::vector<std::string> getIdopontok() const;
         void setIdopontok(std::vector<std::string>);
 
-        unsigned getOsztaly() const;
-        void setOsztaly(unsigned);
+        int getOsztaly() const;
+        void setOsztaly(int);
 
-        unsigned getOraszam() const;
-        void setOraszam(unsigned);
+        int getOraszam() const;
+        void setOraszam(int);
 };
 
 #endif
